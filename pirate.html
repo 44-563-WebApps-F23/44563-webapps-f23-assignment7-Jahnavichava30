@@ -79,7 +79,7 @@
     </div>
   </div>
   <div class="box">
-    <p role="button" id="helpButton" onclick="updateHelpAndPenalty()">Click for help.</p>
+    <p role="button" id="helpButton" onclick="HelpAndPenalty()">Click for help.</p>
 </div>
 
 
@@ -176,7 +176,6 @@
     </div>
 </div>
    <script>
-  // Variables (Part 4)
   let ids = [];
         let checkCount = 0;
         let penalty = 0;
@@ -185,7 +184,6 @@
         let trapLocation = 18;
         let gameOver = false;
 
-        // Generate image IDs and assign onclick events
         for (let i = 0; i < 25; i++) {
             let id = `loc${i}`;
             ids.push(id);
@@ -193,8 +191,6 @@
                 check(i);
             };
         }
-
-        // Functions (Part 4)
         function check(position) {
             console.log("Clicked position: " + position);
             if (gameOver) return;
@@ -220,10 +216,8 @@
             document.getElementById("penalty").innerText = `Penalty is ${penalty}.`;
             lastCheck = position;
         }
-
         function help() {
             if (gameOver) return;
-
             const rowLast = Math.floor(lastCheck / 5);
             const colLast = lastCheck % 5;
             const rowTreasure = Math.floor(treasureLocation / 5);
@@ -232,33 +226,26 @@
             const distance = Math.abs(rowLast - rowTreasure) + Math.abs(colLast - colTreasure);
 
             if (distance === 1) {
-                // If one square away, mark in red
-                document.getElementById(`loc${treasureLocation}`).style.borderColor = "red";
+                document.getElementById("loc${treasureLocation}").style.borderColor = "red";
                 return "Can Smell It";
             } else if (distance === 2) {
-                // If two squares away, mark in orange
-                document.getElementById(`loc${treasureLocation}`).style.borderColor = "orange";
+                document.getElementById("loc${treasureLocation}").style.borderColor = "orange";
                 return "Close Matie";
             } else {
-                // Any other distance, keep the border color as default
-                document.getElementById(`loc${treasureLocation}`).style.borderColor = "white";
+                document.getElementById("loc${treasureLocation}").style.borderColor = "brown";
                 return "Step Faster";
             }
         }
-
-        // Moved the function outside window.onload
-        function updateHelpAndPenalty() {
+        function HelpAndPenalty() {
             if (gameOver) return;
             const helpMessage = help();
             document.getElementById("help").innerText = helpMessage;
             penalty += 2;
-            document.getElementById("penalty").innerText = `Penalty is ${penalty}.`;
+            document.getElementById("penalty").innerText = "Penalty is ${penalty}.";
         }
-
-        // Add event listener for the "Click for help" button
         const helpButton = document.getElementById("helpButton");
         if (helpButton) {
-            helpButton.addEventListener("click", updateHelpAndPenalty);
+            helpButton.addEventListener("click", HelpAndPenalty);
         }
   </script>
       
