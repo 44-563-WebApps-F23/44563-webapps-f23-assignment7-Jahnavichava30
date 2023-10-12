@@ -77,6 +77,7 @@
     <div class="box-column" id="help">
       <p>Help report</p>
     </div>
+    <button type="button" class="btn btn-primary" onclick="resetValues()">New Game</button>
   </div>
   <div class="box">
     <p role="button" id="helpButton" onclick="HelpAndPenalty()">Click for help.</p>
@@ -180,8 +181,10 @@
         let checkCount = 0;
         let penalty = 0;
         let lastCheck = 0;
-        let treasureLocation = 5;
-        let trapLocation = 18;
+        var treasureLocation = 5;
+        var trapLocation = 18;
+         treasureLocation = Math.floor(Math.random() * 25);
+         trapLocation = Math.floor(Math.random() * 25);
         let gameOver = false;
 
         for (let i = 0; i < 25; i++) {
@@ -191,6 +194,26 @@
                 check(i);
             };
         }
+
+        function resetValues(){
+            Count = 0;
+            penalty = 0;
+            lastCheck = 0;
+            treasureLocation = Math.floor(Math.random() * 25);
+            trapLocation = Math.floor(Math.random() * 25);
+
+            document.getElementById("locations").innerHTML =  "Number of locations checked is : " + Count;
+            document.getElementById("penalty").innerHTML = "Penalty is : " + penalty;
+            var imageElements = document.getElementsByTagName("img");
+            for(let k = 0; k < imageElements.length; k++){
+                imageElements[k].src = "location.jpg"; 
+            }
+            gameOver = false;
+        }
+
+
+
+
         function check(position) {
             console.log("Clicked position: " + position);
             if (gameOver) return;
@@ -208,12 +231,12 @@
                 penalty += 4;
             } else {
                 imageElement.src = "pirate2.jpg";
-                penalty += 1;
             }
 
-            checkCount += 1;
+            checkCount++;
+            penalty++;
             document.getElementById("locations").innerText = `Number of locations checked is ${checkCount}.`;
-            document.getElementById("penalty").innerText = `Penalty is ${penalty}.`;
+            document.getElementById("penalty").innerHTML = "Penalty is " + penalty;
             lastCheck = position;
         }
         function help() {
@@ -226,13 +249,13 @@
             const distance = Math.abs(rowLast - rowTreasure) + Math.abs(colLast - colTreasure);
 
             if (distance === 1) {
-                document.getElementById("loc${treasureLocation}").style.borderColor = "red";
+                document.getElementById(`loc${treasureLocation}`).style.borderColor= "red";
                 return "Can Smell It";
             } else if (distance === 2) {
-                document.getElementById("loc${treasureLocation}").style.borderColor = "orange";
+                document.getElementById(`loc${treasureLocation}`).style.borderColor = "orange";
                 return "Close Matie";
             } else {
-                document.getElementById("loc${treasureLocation}").style.borderColor = "brown";
+                document.getElementById(`loc${treasureLocation}`).style.borderColor = "brown";
                 return "Step Faster";
             }
         }
@@ -241,12 +264,12 @@
             const helpMessage = help();
             document.getElementById("help").innerText = helpMessage;
             penalty += 2;
-            document.getElementById("penalty").innerText = "Penalty is ${penalty}.";
+            document.getElementById("penalty").innerText = "Penalty is " + penalty;
         }
-        const helpButton = document.getElementById("helpButton");
-        if (helpButton) {
-            helpButton.addEventListener("click", HelpAndPenalty);
-        }
+       // const helpButton = document.getElementById("helpButton");
+       // if (helpButton) {
+          //  helpButton.addEventListener("click", HelpAndPenalty);
+       // }
   </script>
       
 </body>

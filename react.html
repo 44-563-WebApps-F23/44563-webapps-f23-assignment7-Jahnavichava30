@@ -26,19 +26,27 @@ function recordTime()
   reactTime = Date.now();
   console.log("React time recorded:", reactTime);
 }
+//Set the second argument of setTimeout to be (8-i) times 1000. (We want the count to drop to zero after 8000 milliseconds.
+        function startTimer() 
+        {
+           
+          var count = Math.floor(Math.random() * (10 - 2 + 1)) + 2;
+            for(let i = 0; i <= count; i++){
 
-
-        function startTimer() {
-            for (let i = 0; i < 9; i++) {
                 setTimeout(() => {
-                    document.getElementById('counter').innerHTML = 'Count: ' + i;
-                }, (8 - i) * 1000);
+                  
+                    document.getElementById('counter').innerHTML =  i;
+                }, (count - i) * 1000);
             }
-
+//  c. Set the callback to an anonymous function which checks to see if reactTime is
+//undefined. If so, the user was too slow. Set the innerHTML of the element
+//with id target to “Too Slow”
             setTimeout(() => {
                 if (reactTime === undefined) {
                     document.getElementById('target').innerHTML = 'Too Slow';
-                } else {
+                } else 
+                {
+// Create a variable endTime and set its value to Date.now()
                     const endTime = Date.now();
                     const elapsedTime = endTime - reactTime;
                     document.getElementById('target').innerHTML = 'Time was ' + elapsedTime + 'ms';
